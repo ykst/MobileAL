@@ -123,7 +123,7 @@ static inline bool ____benchmark_check_time(char const * const comment, uint64_t
 #define IS_IOS6 (!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0"))
 
 #ifdef DEBUG
-#define ENABLE_BENCHMARK
+//#define ENABLE_BENCHMARK
 #endif
 #ifdef ENABLE_BENCHMARK
 #define BENCHMARK(comment) for(uint64_t ____tick = 0, ____start = mach_absolute_time(); ____benchmark_check_time(comment, ____start, ____tick); ++____tick)

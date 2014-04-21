@@ -6,19 +6,19 @@
 //  Copyright (c) 2014年 monadworks. All rights reserved.
 //
 
-#import "VSRawAudioFreight.h"
+#import "MALRawAudioFreight.h"
 
-@interface VSRawAudioFreight() {
+@interface MALRawAudioFreight() {
 }
 
 @end
 
 
-@implementation VSRawAudioFreight
+@implementation MALRawAudioFreight
 
-+ (instancetype)createWithSamples:(size_t)num_samples withFormat:(VSRawAudioFormat)format withSamplingRate:(float)sampling_rate
++ (instancetype)createWithSamples:(size_t)num_samples withFormat:(MALRawAudioFormat)format withSamplingRate:(float)sampling_rate
 {
-    VSRawAudioFreight *obj = [[[self class] alloc] init];
+    MALRawAudioFreight *obj = [[[self class] alloc] init];
 
     ASSERT([obj _setupWithSamples:num_samples withFormat:format withSamplingRate:sampling_rate], return nil);
 
@@ -31,11 +31,11 @@
     ASSERT(sampling_rate == 44100, return NO); // TODO: remove this constraint
 
     switch (format) {
-        case VSRAWAUDIO_FORMAT_PCM_FLOAT32:
+        case MAL_RAWAUDIO_FORMAT_PCM_FLOAT32:
             _bytes_per_sample = 4;
             break;
 
-        case VSRAWAUDIO_FORMAT_PCM_INT16:
+        case MAL_RAWAUDIO_FORMAT_PCM_INT16:
             _bytes_per_sample = 2;
             break;
 

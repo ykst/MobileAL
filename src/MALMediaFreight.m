@@ -6,8 +6,8 @@
 //  Copyright (c) 2014年 monadworks. All rights reserved.
 //
 
-#import "VSMediaFreight.h"
+#import "MALMediaFreight.h"
 
-@implementation VSMediaFreight
+@implementation MALMediaFreight
 @synthesize timestamp = _timestamp;
 @end

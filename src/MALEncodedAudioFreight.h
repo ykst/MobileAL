@@ -6,12 +6,12 @@
 //  Copyright (c) 2014年 monadworks. All rights reserved.
 //
 
-#import "VSMediaFreight.h"
+#import "MALMediaFreight.h"
 
-@interface VSEncodedAudioFreight : VSMediaFreight
+@interface MALEncodedAudioFreight : MALMediaFreight
 
 typedef NS_ENUM(NSUInteger, VSEncodedAudioFormat) {
-    VSENCODED_AUDIO_FORMAT_ADPCM = 1,
+    MAL_ENCODED_AUDIO_FORMAT_ADPCM = 1,
 };
 @property (nonatomic, readonly) VSEncodedAudioFormat format;
 @property (nonatomic, readwrite) int16_t start_sample; // XXX: ADPCM specific

@@ -8,10 +8,10 @@
 
 #import <Accelerate/Accelerate.h>
 #import <BlocksKit/BlocksKit+UIKit.h>
-#import "MCVAudioPCMCapture.h"
-#import "VSRawAudioFreight.h"
+#import "MALRawAudioCapture.h"
+#import "MALRawAudioFreight.h"
 
-@interface MCVAudioPCMCapture() {
+@interface MALRawAudioCapture() {
 }
 
 @property (nonatomic, readonly) AudioUnit io_unit;
@@ -21,22 +21,22 @@
 @property (nonatomic, readonly) BOOL is_interleaved;
 @property (nonatomic, readonly) float *work_float;
 
-@property (nonatomic, readwrite) VSRawAudioFreight *keep_buf;
+@property (nonatomic, readwrite) MALRawAudioFreight *keep_buf;
 
 @end
 
-@implementation MCVAudioPCMCapture
+@implementation MALRawAudioCapture
 
 static BOOL __granted = NO;
 
-+ (instancetype)createWithConduit:(MTNode *)conduit withFormat:(VSRawAudioFormat)format
++ (instancetype)createWithConduit:(MTNode *)conduit withFormat:(MALRawAudioFormat)format
 {
     return [[self class] createWithConduit:conduit withFormat:format withDelegate:nil];
 }
 
-+ (instancetype)createWithConduit:(MTNode *)conduit withFormat:(VSRawAudioFormat)format withDelegate:(id<MCVAudioPCMCaptureDelegate>)delegate
++ (instancetype)createWithConduit:(MTNode *)conduit withFormat:(MALRawAudioFormat)format withDelegate:(id<MALRawAudioCaptureDelegate>)delegate
 {
-    MCVAudioPCMCapture *obj = [[[self class] alloc] init];
+    MALRawAudioCapture *obj = [[[self class] alloc] init];
 
     obj.delegate = delegate;
 
@@ -50,7 +50,7 @@ static BOOL __granted = NO;
     return __granted;
 }
 
-- (BOOL)_setupWithConduit:(MTNode *)conduit withFormat:(VSRawAudioFormat)format
+- (BOOL)_setupWithConduit:(MTNode *)conduit withFormat:(MALRawAudioFormat)format
 {
     _format = format;
 
@@ -198,7 +198,7 @@ OSStatus __audio_input_callback_float(void						*inRefCon,
                           UInt32						inNumberFrames,
                           AudioBufferList			* ioData)
 {
-	MCVAudioPCMCapture *sm = (__bridge MCVAudioPCMCapture *)inRefCon;
+	MALRawAudioCapture *sm = (__bridge MALRawAudioCapture *)inRefCon;
 
     if (!sm.playing || sm.interrupted) return noErr;
 
@@ -246,7 +246,7 @@ OSStatus __audio_input_callback_i16(void						*inRefCon,
                                       UInt32						inNumberFrames,
                                       AudioBufferList			* ioData)
 {
-	MCVAudioPCMCapture *sm = (__bridge MCVAudioPCMCapture *)inRefCon;
+	MALRawAudioCapture *sm = (__bridge MALRawAudioCapture *)inRefCon;
 
     if (!sm.playing || sm.interrupted) return noErr;
 
@@ -362,10 +362,10 @@ error:
 {
     AURenderCallbackStruct callback_struct = {};
     switch (_format) {
-        case VSRAWAUDIO_FORMAT_PCM_FLOAT32:
+        case MAL_RAWAUDIO_FORMAT_PCM_FLOAT32:
             callback_struct.inputProc = __audio_input_callback_float;
             break;
-        case VSRAWAUDIO_FORMAT_PCM_INT16:
+        case MAL_RAWAUDIO_FORMAT_PCM_INT16:
             callback_struct.inputProc = __audio_input_callback_i16;
             break;
         default:
@@ -505,7 +505,7 @@ error:
     [self _cleanup];
 }
 
-- (void)appendMetaInfo:(VSRawAudioFreight *)captured_buf
+- (void)appendMetaInfo:(MALRawAudioFreight *)captured_buf
 {
     // override
 }

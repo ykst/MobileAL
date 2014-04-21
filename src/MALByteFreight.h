@@ -7,9 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <MobileCV/MCVFreight.h>
 
-@interface MCVByteFreight : MCVFreight {
+@interface MALByteFreight : NSObject {
     @protected
     NSMutableData *_data;
     int _cursor;

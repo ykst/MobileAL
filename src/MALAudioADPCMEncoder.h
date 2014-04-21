@@ -7,16 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "VSRawAudioFreight.h"
-#import "MCVByteFreight.h"
-#import "VSEncodedAudioFreight.h"
+#import "MALRawAudioFreight.h"
+#import "MALByteFreight.h"
+#import "MALEncodedAudioFreight.h"
 
 // IMA 4:1 ADPCM.
 @interface MALAudioADPCMEncoder : NSObject
 
 + (instancetype)create;
 
-- (BOOL)process:(VSRawAudioFreight *)src to:(VSEncodedAudioFreight *)dst;
+- (BOOL)process:(MALRawAudioFreight *)src to:(MALEncodedAudioFreight *)dst;
 
-- (BOOL)debugDecode:(MCVByteFreight *)src to:(VSRawAudioFreight *)dst;
+- (BOOL)debugDecode:(MALByteFreight *)src to:(MALRawAudioFreight *)dst;
 @end

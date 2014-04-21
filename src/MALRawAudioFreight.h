@@ -6,23 +6,23 @@
 //  Copyright (c) 2014年 monadworks. All rights reserved.
 //
 
-#import "VSMediaFreight.h"
+#import "MALMediaFreight.h"
 
-@interface VSRawAudioFreight : VSMediaFreight
+@interface MALRawAudioFreight : MALMediaFreight
 
-typedef NS_ENUM(NSUInteger, VSRawAudioFormat)
+typedef NS_ENUM(NSUInteger, MALRawAudioFormat)
 {
-    VSRAWAUDIO_FORMAT_PCM_FLOAT32 = 1,
-    VSRAWAUDIO_FORMAT_PCM_INT16 = 2,
+    MAL_RAWAUDIO_FORMAT_PCM_FLOAT32 = 1,
+    MAL_RAWAUDIO_FORMAT_PCM_INT16 = 2,
 };
 
 @property (nonatomic, readonly) float sampling_rate;
 @property (nonatomic, readonly) size_t num_samples;
 @property (nonatomic, readonly) size_t bytes_per_sample;
-@property (nonatomic, readonly) VSRawAudioFormat format; // not used, PCM only
+@property (nonatomic, readonly) MALRawAudioFormat format; // not used, PCM only
 
 // format is unused
-+ (instancetype)createWithSamples:(size_t)num_samples withFormat:(VSRawAudioFormat)format withSamplingRate:(float)sampling_rate;
++ (instancetype)createWithSamples:(size_t)num_samples withFormat:(MALRawAudioFormat)format withSamplingRate:(float)sampling_rate;
 
 - (BOOL)feed:(const float *)buf withSamples:(size_t)samples; // append data. return YES when the internal buffer was filled up
 @end

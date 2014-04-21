@@ -9,7 +9,7 @@
 #include <sys/time.h>
 #import <Foundation/Foundation.h>
 
-@protocol MCVTimeStampFreightProtocol <NSObject>
+@protocol MALTimeStampFreightProtocol <NSObject>
 
 @required
 @property (nonatomic, readwrite) struct timeval timestamp;

@@ -6,13 +6,13 @@
 //  Copyright (c) 2014年 monadworks. All rights reserved.
 //
 
-#import "MCVByteFreight.h"
+#import "MALByteFreight.h"
 
-@implementation MCVByteFreight
+@implementation MALByteFreight
 
 + (instancetype)createWithLength:(size_t)length
 {
-    MCVByteFreight *obj = [[[self class] alloc] init];
+    MALByteFreight *obj = [[[self class] alloc] init];
 
     [obj _setupWithLength:length];
 
@@ -21,7 +21,7 @@
 
 + (instancetype)createVariable
 {
-    MCVByteFreight *obj = [[[self class] alloc] init];
+    MALByteFreight *obj = [[[self class] alloc] init];
 
     [obj _setupVariable];
 

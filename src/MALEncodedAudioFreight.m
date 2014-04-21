@@ -6,19 +6,19 @@
 //  Copyright (c) 2014年 monadworks. All rights reserved.
 //
 
-#import "VSEncodedAudioFreight.h"
+#import "MALEncodedAudioFreight.h"
 
-@interface VSEncodedAudioFreight()
+@interface MALEncodedAudioFreight()
 @property (nonatomic, readwrite) VSEncodedAudioFormat format;
 @end
 
-@implementation VSEncodedAudioFreight
+@implementation MALEncodedAudioFreight
 
 + (instancetype)createWithLength:(size_t)length withFormat:(VSEncodedAudioFormat)format
 {
-    ASSERT(format == VSENCODED_AUDIO_FORMAT_ADPCM, return nil);
+    ASSERT(format == MAL_ENCODED_AUDIO_FORMAT_ADPCM, return nil);
 
-    VSEncodedAudioFreight *obj = [[self class] createWithLength:length];
+    MALEncodedAudioFreight *obj = [[self class] createWithLength:length];
 
     obj.format = format;
 

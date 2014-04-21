@@ -6,10 +6,10 @@
 //  Copyright (c) 2014年 monadworks. All rights reserved.
 //
 
-#import "MCVByteFreight.h"
-#import "MCVTimeStampFreightProtocol.h"
+#import "MALByteFreight.h"
+#import "MALTimeStampFreightProtocol.h"
 
-@interface VSMediaFreight : MCVByteFreight<MCVTimeStampFreightProtocol> {
+@interface MALMediaFreight : MALByteFreight<MALTimeStampFreightProtocol> {
     @protected
     struct timeval _timestamp;
 }

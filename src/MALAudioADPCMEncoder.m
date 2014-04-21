@@ -332,10 +332,10 @@ static void __decode_adpcm(const uint8_t *nibbles, size_t num_samples, float *ds
     return YES;
 }
 
-- (BOOL)process:(VSRawAudioFreight *)src to:(VSEncodedAudioFreight *)dst
+- (BOOL)process:(MALRawAudioFreight *)src to:(MALEncodedAudioFreight *)dst
 {
-    ASSERT(src.format == VSRAWAUDIO_FORMAT_PCM_INT16, return NO);
-    ASSERT(dst.format == VSENCODED_AUDIO_FORMAT_ADPCM, return NO);
+    ASSERT(src.format == MAL_RAWAUDIO_FORMAT_PCM_INT16, return NO);
+    ASSERT(dst.format == MAL_ENCODED_AUDIO_FORMAT_ADPCM, return NO);
 
     size_t num_samples = src.num_samples;
     uint8_t *dst_u8 = (uint8_t *)[dst invalidateRange:(num_samples / 2)];
@@ -359,9 +359,9 @@ static void __decode_adpcm(const uint8_t *nibbles, size_t num_samples, float *ds
     return YES;
 }
 
--(BOOL)debugDecode:(MCVByteFreight *)src to:(VSRawAudioFreight *)dst
+-(BOOL)debugDecode:(MALByteFreight *)src to:(MALRawAudioFreight *)dst
 {
-    ASSERT(dst.format == VSRAWAUDIO_FORMAT_PCM_FLOAT32, return NO);
+    ASSERT(dst.format == MAL_RAWAUDIO_FORMAT_PCM_FLOAT32, return NO);
 
     float *dst_float = (float *)[dst invalidateRange:(src.data.length * 8)];
 

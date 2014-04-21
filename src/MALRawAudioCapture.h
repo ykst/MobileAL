@@ -10,9 +10,9 @@
 #import <Foundation/Foundation.h>
 #import <MTPipeline.h>
 
-#import "VSRawAudioFreight.h" // TODO: remove application specific dependency
+#import "MALRawAudioFreight.h" // TODO: remove application specific dependency
 
-@protocol  MCVAudioPCMCaptureDelegate <NSObject>
+@protocol MALRawAudioCaptureDelegate <NSObject>
 
 - (void)saveCurrentGrantedStatus:(BOOL)granted;
 - (BOOL)lastGrantedStatus;
@@ -20,7 +20,7 @@
 @end
 
 // PCM (float, int16) monoral capture
-@interface MCVAudioPCMCapture : NSObject {
+@interface MALRawAudioCapture : NSObject {
     @protected
     AudioBufferList *_input_buffer;
     MTNode *_conduit;
@@ -29,15 +29,15 @@
 @property (nonatomic, readonly) MTNode *conduit;
 @property (nonatomic, readonly) BOOL playing;
 @property (nonatomic, readonly) BOOL interrupted;
-@property (nonatomic, readonly) VSRawAudioFormat format;
+@property (nonatomic, readonly) MALRawAudioFormat format;
 
-@property (nonatomic, weak, readwrite) id<MCVAudioPCMCaptureDelegate> delegate;
-+ (instancetype)createWithConduit:(MTNode *)conduit withFormat:(VSRawAudioFormat)format;
-+ (instancetype)createWithConduit:(MTNode *)conduit withFormat:(VSRawAudioFormat)format withDelegate:(id<MCVAudioPCMCaptureDelegate>)delegate;
+@property (nonatomic, weak, readwrite) id<MALRawAudioCaptureDelegate> delegate;
++ (instancetype)createWithConduit:(MTNode *)conduit withFormat:(MALRawAudioFormat)format;
++ (instancetype)createWithConduit:(MTNode *)conduit withFormat:(MALRawAudioFormat)format withDelegate:(id<MALRawAudioCaptureDelegate>)delegate;
 
 + (BOOL)microphoneAccessGranted;
 - (void)start;
 - (void)pause;
 
-- (void)appendMetaInfo:(VSRawAudioFreight *)captured_buf; // override this to append extra information at captured time
+- (void)appendMetaInfo:(MALRawAudioFreight *)captured_buf; // override this to append extra information at captured time
 @end
