@@ -28,11 +28,21 @@
     return obj;
 }
 
++ (instancetype)createPrealloc
+{
+    MALByteFreight *obj = [[[self class] alloc] init];
+
+    [obj _setupPrealloc];
+
+    return obj;
+}
+
 - (void)_setupWithLength:(size_t)length
 {
     _num_bytes = length;
     _data = [NSMutableData dataWithLength:_num_bytes];
     _is_variable = NO;
+    _is_prealloc = NO;
     [self reset];
 }
 
@@ -41,6 +51,15 @@
     _num_bytes = 0;
     _data = [NSMutableData data];
     _is_variable = YES;
+    _is_prealloc = NO;
+    [self reset];
+}
+
+- (void)_setupPrealloc
+{
+    _num_bytes = 0;
+    _is_variable = NO;
+    _is_prealloc = YES;
     [self reset];
 }
 
@@ -51,6 +70,8 @@
 
 - (BOOL)feedBytes:(const void *)buf withLength:(size_t)length
 {
+    ASSERT(!_is_prealloc, return NO);
+
     size_t next_cursor = _cursor + length;
 
     if (next_cursor > _num_bytes) {
@@ -74,13 +95,30 @@
     return _cursor == _num_bytes;
 }
 
+
+- (BOOL)feedPreallocBytes:(void *)buf withLength:(size_t)length
+{
+    ASSERT(_is_prealloc, return NO);
+
+    ASSERT(_data = [NSData dataWithBytesNoCopy:buf length:length freeWhenDone:YES], return NO);
+
+    _num_bytes = length;
+    _cursor = length;
+
+    return YES;
+}
+
 - (BOOL)feedData:(NSData *)data
 {
+    ASSERT(!_is_prealloc, return NO);
+
     return [self feedBytes:data.bytes withLength:data.length];
 }
 
 - (void *)invalidateRange:(size_t)length
 {
+    ASSERT(!_is_prealloc, return NO);
+
     if (length + _cursor > _num_bytes) return NULL;
 
     void *ret = &(_data.mutableBytes[_cursor]);
@@ -92,6 +130,8 @@
 
 - (NSData *)extractWrittenData
 {
+    ASSERT(!_is_prealloc, return NO);
+
     return [NSData dataWithBytesNoCopy:(void *)_data.bytes length:_cursor freeWhenDone:NO];
 }
 

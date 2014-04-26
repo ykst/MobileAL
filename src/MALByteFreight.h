@@ -14,6 +14,7 @@
     int _cursor;
     size_t _num_bytes;
     BOOL _is_variable;
+    BOOL _is_prealloc;
 }
 
 @property (nonatomic, readonly) NSData *data;
@@ -23,8 +24,10 @@
 
 + (instancetype)createWithLength:(size_t)length;
 + (instancetype)createVariable;
++ (instancetype)createPrealloc;
 - (void)reset; // move writing cursor to initial position
 - (BOOL)feedBytes:(const void *)buf withLength:(size_t)length; // return YES when filled
+- (BOOL)feedPreallocBytes:(void *)buf withLength:(size_t)length;
 - (BOOL)feedData:(NSData *)data; // return YES when filled
 - (void *)invalidateRange:(size_t)length; // return NULL when cursor overruns maximum length
 - (NSData *)extractWrittenData;
