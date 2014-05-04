@@ -72,7 +72,7 @@
 {
     ASSERT(!_is_prealloc, return NO);
 
-    size_t next_cursor = _cursor + length;
+    int next_cursor = _cursor + (int)length;
 
     if (next_cursor > _num_bytes) {
         if (_is_variable) {
@@ -103,7 +103,7 @@
     ASSERT(_data = [NSData dataWithBytesNoCopy:buf length:length freeWhenDone:YES], return NO);
 
     _num_bytes = length;
-    _cursor = length;
+    _cursor = (int)length;
 
     return YES;
 }

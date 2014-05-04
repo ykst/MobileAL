@@ -12,13 +12,13 @@
     @protected
     NSMutableData *_data;
     int _cursor;
-    size_t _num_bytes;
+    int _num_bytes;
     BOOL _is_variable;
     BOOL _is_prealloc;
 }
 
 @property (nonatomic, readonly) NSData *data;
-@property (nonatomic, readonly) size_t num_bytes;
+@property (nonatomic, readonly) int num_bytes;
 @property (nonatomic, readonly) int cursor;
 @property (nonatomic, readonly) BOOL filled;
 
