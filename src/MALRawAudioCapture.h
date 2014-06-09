@@ -8,7 +8,7 @@
 
 #import <AVFoundation/AVFoundation.h>
 #import <Foundation/Foundation.h>
-#import <MTPipeline.h>
+#import <MTPipeline/MTPipeline.h>
 
 #import "MALRawAudioFreight.h" // TODO: remove application specific dependency
 
