@@ -39,7 +39,7 @@
 
 - (void)_setupWithLength:(size_t)length
 {
-    _num_bytes = length;
+    _num_bytes = (unsigned)length;
     _data = [NSMutableData dataWithLength:_num_bytes];
     _is_variable = NO;
     _is_prealloc = NO;
@@ -102,7 +102,7 @@
 
     ASSERT(_data = [NSData dataWithBytesNoCopy:buf length:length freeWhenDone:YES], return NO);
 
-    _num_bytes = length;
+    _num_bytes = (unsigned)length;
     _cursor = (int)length;
 
     return YES;

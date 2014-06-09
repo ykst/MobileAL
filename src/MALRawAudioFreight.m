@@ -46,7 +46,7 @@
 
     _sampling_rate = sampling_rate;
     _num_samples = num_samples;
-    _num_bytes = _bytes_per_sample * _num_samples;
+    _num_bytes = (int)_bytes_per_sample * (int)_num_samples;
     _format = format;
 
     _data = [NSMutableData dataWithLength:_num_bytes];
@@ -58,7 +58,7 @@
 
 - (BOOL)feed:(const float *)buf withSamples:(size_t)samples
 {
-    int length = samples * _bytes_per_sample;
+    unsigned length = (unsigned)samples * (unsigned)_bytes_per_sample;
 
     return [self feedBytes:buf withLength:length];
 }

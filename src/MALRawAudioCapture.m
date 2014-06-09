@@ -147,7 +147,7 @@ static BOOL __granted = NO;
 
     NSUInteger reason_code = [notification.userInfo[AVAudioSessionRouteChangeReasonKey] unsignedIntegerValue];
 
-    DBG("AVAudio: rounte change (in:%@)(out:%@)(reason:%u)", description.inputs, description.outputs, reason_code);
+    DBG("AVAudio: rounte change (in:%@)(out:%@)(reason:%u)", description.inputs, description.outputs, (unsigned)reason_code);
 #endif
 }
 
@@ -304,8 +304,8 @@ OSStatus __audio_input_callback_i16(void						*inRefCon,
 
     NSInteger num_input_channels = session.inputNumberOfChannels;
 
-    DBG(@"AVAudio: input channels = %d", num_input_channels);
-    DBG(@"AVAudio: output channels = %d", session.outputNumberOfChannels);
+    DBG(@"AVAudio: input channels = %d", (int)num_input_channels);
+    DBG(@"AVAudio: output channels = %d", (int)session.outputNumberOfChannels);
     DBG(@"AVAudio: sample rate = %.f", session.sampleRate);
 
     _num_input_channels = num_input_channels;

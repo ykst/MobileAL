@@ -187,7 +187,7 @@ static void __encode_adpcm_simd(const int16_t *samples, size_t num_samples, uint
     int32_t prevsample = *p_prevsample;
     int previndex = *p_previndex;
 
-    int cycles = num_samples / 16;
+    int cycles = (unsigned)num_samples / 16;
 /*
     while (cycles > 0) {
         uint64_t code16 = 0ULL;
