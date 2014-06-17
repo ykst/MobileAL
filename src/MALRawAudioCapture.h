@@ -14,7 +14,9 @@
 
 @protocol MALRawAudioCaptureDelegate <NSObject>
 
+@required
 - (void)saveCurrentGrantedStatus:(BOOL)granted;
+- (void)permissionNotGranted;
 - (BOOL)lastGrantedStatus;
 
 @end

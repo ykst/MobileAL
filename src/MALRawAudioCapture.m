@@ -7,7 +7,6 @@
 //
 
 #import <Accelerate/Accelerate.h>
-#import <BlocksKit/BlocksKit+UIKit.h>
 #import "MALRawAudioCapture.h"
 #import "MALRawAudioFreight.h"
 
@@ -82,11 +81,9 @@ static BOOL __granted = NO;
             } else {
                 if ([_delegate respondsToSelector:@selector(lastGrantedStatus)] &&
                     [_delegate lastGrantedStatus] == YES) {
-                    [NSTimer bk_performBlock:^{
-                        UIAlertView *alert = [[UIAlertView alloc] bk_initWithTitle:NSLocalizedString(@"Permission", nil) message:NSLocalizedString(@"AUDIO_PERMISSION_ALERT", nil)];
-                        [alert bk_addButtonWithTitle:@"OK" handler:^{}];
-                        [alert show];
-                    } afterDelay:0.5f];
+                    if ([_delegate respondsToSelector:@selector(permissionNotGranted)]) {
+                        [_delegate permissionNotGranted];
+                    }
                 }
             }
 
@@ -99,6 +96,7 @@ static BOOL __granted = NO;
         continuation();
     }
 }
+
 - (BOOL)_setupAudio
 {
     ASSERT([self _setupAudioNotifications] == YES, return NO);
@@ -164,8 +162,6 @@ static BOOL __granted = NO;
     return YES;
 }
 
-
-
 - (void *)_getOutputPointer:(UInt32)num_samples
 {
     if (_keep_buf == nil) {
@@ -191,14 +187,14 @@ static BOOL __granted = NO;
     }
 }
 
-OSStatus __audio_input_callback_float(void						*inRefCon,
-                          AudioUnitRenderActionFlags	* ioActionFlags,
-                          const AudioTimeStamp 		* inTimeStamp,
-                          UInt32						inOutputBusNumber,
-                          UInt32						inNumberFrames,
-                          AudioBufferList			* ioData)
+OSStatus __audio_input_callback_float(void *inRefCon,
+                                      AudioUnitRenderActionFlags* ioActionFlags,
+                                      const AudioTimeStamp * inTimeStamp,
+                                      UInt32 inOutputBusNumber,
+                                      UInt32 inNumberFrames,
+                                      AudioBufferList * ioData)
 {
-	MALRawAudioCapture *sm = (__bridge MALRawAudioCapture *)inRefCon;
+    MALRawAudioCapture *sm = (__bridge MALRawAudioCapture *)inRefCon;
 
     if (!sm.playing || sm.interrupted) return noErr;
 
@@ -209,7 +205,7 @@ OSStatus __audio_input_callback_float(void						*inRefCon,
 
     UInt32 num_bytes_per_sample = sm.num_bytes_per_sample;
     NSInteger num_input_channels = sm.num_input_channels;
-    //BOOL is_interleaved = sm.is_interleaved;
+
     float *out_data = [sm _getOutputPointer:inNumberFrames];
 
     if (out_data == NULL) return noErr;
@@ -239,14 +235,14 @@ OSStatus __audio_input_callback_float(void						*inRefCon,
     return noErr;
 }
 
-OSStatus __audio_input_callback_i16(void						*inRefCon,
-                                      AudioUnitRenderActionFlags	* ioActionFlags,
-                                      const AudioTimeStamp 		* inTimeStamp,
-                                      UInt32						inOutputBusNumber,
-                                      UInt32						inNumberFrames,
-                                      AudioBufferList			* ioData)
+OSStatus __audio_input_callback_i16(void *inRefCon,
+                                    AudioUnitRenderActionFlags * ioActionFlags,
+                                    const AudioTimeStamp  * inTimeStamp,
+                                    UInt32 inOutputBusNumber,
+                                    UInt32 inNumberFrames,
+                                    AudioBufferList * ioData)
 {
-	MALRawAudioCapture *sm = (__bridge MALRawAudioCapture *)inRefCon;
+    MALRawAudioCapture *sm = (__bridge MALRawAudioCapture *)inRefCon;
 
     if (!sm.playing || sm.interrupted) return noErr;
 
@@ -257,7 +253,7 @@ OSStatus __audio_input_callback_i16(void						*inRefCon,
 
     UInt32 num_bytes_per_sample = sm.num_bytes_per_sample;
     NSInteger num_input_channels = sm.num_input_channels;
-    //BOOL is_interleaved = sm.is_interleaved;
+
     int16_t *out_data = [sm _getOutputPointer:inNumberFrames];
 
     if (out_data == NULL) return noErr;
