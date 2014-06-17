@@ -343,7 +343,7 @@ static void __decode_adpcm(const uint8_t *nibbles, size_t num_samples, float *ds
     ASSERT(dst_u8 != NULL, return NO);
 
     //BENCHMARK("encode adpcm")
-    const int16_t *in_i16 = src.data.bytes;
+    const int16_t *in_i16 = src.buf;
     //uint8_t *check = malloc(num_samples /2);
 
     dst.start_sample = _prevsample;
@@ -358,17 +358,18 @@ static void __decode_adpcm(const uint8_t *nibbles, size_t num_samples, float *ds
     //free(check);
     return YES;
 }
-
+/*
 -(BOOL)debugDecode:(MALByteFreight *)src to:(MALRawAudioFreight *)dst
 {
     ASSERT(dst.format == MAL_RAWAUDIO_FORMAT_PCM_FLOAT32, return NO);
 
-    float *dst_float = (float *)[dst invalidateRange:(src.data.length * 8)];
+    float *dst_float = (float *)[dst invalidateRange:(src.num_bytes * 8)];
 
     ASSERT(dst_float != NULL, return NO);
 
-    __decode_adpcm(src.data.bytes, src.data.length * 2, dst_float);
+    __decode_adpcm(src.data.bytes, src.num_bytes, dst_float);
 
     return YES;
 }
+ */
 @end

@@ -49,7 +49,7 @@
     _num_bytes = (int)_bytes_per_sample * (int)_num_samples;
     _format = format;
 
-    _data = [NSMutableData dataWithLength:_num_bytes];
+    ASSERT(_buf = malloc(_num_bytes), return NO); // [NSMutableData dataWithLength:_num_bytes];
 
     [self reset];
 
@@ -63,5 +63,9 @@
     return [self feedBytes:buf withLength:length];
 }
 
+- (void)dealloc
+{
+    FREE(_buf);
+}
 
 @end
