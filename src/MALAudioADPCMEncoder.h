@@ -18,5 +18,4 @@
 
 - (BOOL)process:(MALRawAudioFreight *)src to:(MALEncodedAudioFreight *)dst;
 
-- (BOOL)debugDecode:(MALByteFreight *)src to:(MALRawAudioFreight *)dst;
 @end

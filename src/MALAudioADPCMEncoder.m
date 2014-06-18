@@ -256,6 +256,7 @@ static void __encode_adpcm(const int16_t *samples, size_t num_samples, uint8_t *
 }
  */
 
+#if 0
 static void __decode_adpcm(const uint8_t *nibbles, size_t num_samples, float *dst)
 {
     int32_t prevsample = 0;
@@ -314,6 +315,7 @@ static void __decode_adpcm(const uint8_t *nibbles, size_t num_samples, float *ds
         dst[i] = predsample / (float)0x7FFF;
     }
 }
+#endif
 
 + (instancetype)create
 {
