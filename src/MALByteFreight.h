@@ -11,6 +11,9 @@
 // We manage raw pointer to reduce allocation/releasing overhead.
 // This is because this data structure will be likely used in realtime,
 // especially in Remote-IO threads which should return immediately.
+// Actually, we should have separated just the ringbuffer functionality and
+// simply extend NSData instead of doing this.
+
 @interface MALByteFreight : NSObject {
     @protected
     void *_buf;
@@ -29,6 +32,7 @@
 + (instancetype)createVariable;
 
 - (NSData *)data; // instanciate NSData from buf on the fly
+- (NSData *)retrieveData; // instanciate NSData and rob the ownership of underlying buffer
 - (void)reset; // move writing cursor to initial position
 - (BOOL)feedBytes:(const void *)buf withLength:(size_t)length; // return YES when filled
 - (BOOL)feedData:(NSData *)data; // return YES when filled

@@ -97,7 +97,9 @@
 
 - (void *)invalidateRange:(size_t)length
 {
-    if (length + _cursor > _num_bytes) return NULL;
+    if (length + _cursor > _num_bytes) {
+        return NULL;
+    }
 
     void *ret = &_buf[_cursor];
 
@@ -114,6 +116,15 @@
 - (NSData *)data
 {
     return [NSData dataWithBytesNoCopy:_buf length:_num_bytes freeWhenDone:NO];
+}
+
+- (NSData *)retrieveData
+{
+    NSData *ret = [NSData dataWithBytesNoCopy:_buf length:_num_bytes freeWhenDone:YES];
+
+    _buf = NULL;
+
+    return ret;
 }
 
 - (BOOL)filled
